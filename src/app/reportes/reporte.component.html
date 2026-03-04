@@ -1,0 +1,47 @@
+<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #004b81; padding-bottom: 10px;">
+  <h1 style="color: #004b81; margin: 0;">Reporte Bancario</h1>
+  <button (click)="exportarPDF()" style="background: #ffcc00; color: #000; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold; cursor: pointer;">
+    Exportar PDF
+  </button>
+</div>
+
+<div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #dee2e6; display: flex; gap: 15px; align-items: flex-end;">
+  <label><strong>ID Cliente:</strong><br> <input type="number" [(ngModel)]="id" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc; width: 80px;"></label>
+  <label><strong>Desde:</strong><br> <input type="date" [(ngModel)]="fechaInicio" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;"></label>
+  <label><strong>Hasta:</strong><br> <input type="date" [(ngModel)]="fechaFin" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;"></label>
+  <button (click)="consultarReporte()" style="background: #004b81; color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer;">
+    Consultar
+  </button>
+</div>
+
+<table style="width: 100%; border-collapse: collapse; margin-top: 10px; border: 1px solid #eee;">
+  <thead style="background: #004b81; color: white;">
+    <tr>
+      <th style="padding: 12px; text-align: left;">Fecha</th>
+      <th style="padding: 12px; text-align: left;">Cliente</th>
+      <th style="padding: 12px; text-align: left;">Numero Cuenta</th>
+      <th style="padding: 12px; text-align: left;">Tipo</th>
+      <th style="padding: 12px; text-align: left;">Saldo Inicial</th>
+      <th style="padding: 12px; text-align: left;">Estado</th>
+      <th style="padding: 12px; text-align: left;">Movimiento</th>
+      <th style="padding: 12px; text-align: left;">Saldo Disponible</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let m of movimientos" style="border-bottom: 1px solid #eee;">
+      <td style="padding: 12px;">{{ m.fecha }}</td>
+      <td style="padding: 12px;">{{ m.cuenta?.cliente?.nombre }}</td>
+      <td style="padding: 12px;">{{ m.cuenta?.numeroCuenta }}</td>
+      <td style="padding: 12px;">{{ m.cuenta?.tipoCuenta }}</td>
+      <td style="padding: 12px;">{{ m.cuenta?.saldoInicial }}</td>
+      <td style="padding: 12px;">{{ m.cuenta?.estado ? 'True' : 'False' }}</td>
+      <td style="padding: 12px; font-weight: bold;" [style.color]="m.valor < 0 ? 'red' : 'green'">{{ m.valor }}</td>
+      <td style="padding: 12px;">{{ m.saldo }}</td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="movimientos.length > 0" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #dee2e6;">
+  <h3 style="color: #004b81; margin-bottom: 10px;">Resumen</h3>
+  <p>Total Créditos (Depósitos): <strong style="color: green;">{{ totalCreditos }}</strong></p>
+  <p>Total Débitos (Retiros): <strong style="color: red;">{{ totalDebitos }}</strong></p>
+</div>
