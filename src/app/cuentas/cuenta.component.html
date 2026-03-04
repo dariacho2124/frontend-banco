@@ -2,13 +2,13 @@
 
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
     <h1 style="color: #333; margin: 0;">Cuentas</h1>
-    <button (click)="mostrarFormulario = !mostrarFormulario" 
+    <button (click)="mostrarFormulario.set(!mostrarFormulario())" 
             style="background: #ffcc00; color: #000; border: none; padding: 10px 25px; border-radius: 4px; font-weight: bold; cursor: pointer;">
-      {{ mostrarFormulario ? 'Cerrar' : 'Nueva Cuenta' }}
+      {{ mostrarFormulario() ? 'Cerrar' : 'Nueva Cuenta' }}
     </button>
   </div>
 
-  <div *ngIf="mostrarFormulario" style="background: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px;">
+  <div *ngIf="mostrarFormulario()" style="background: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px;">
     <h3>{{ nuevaCuenta.id ? 'Editar Cuenta' : 'Nueva Cuenta' }}</h3>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
       <input type="number" [(ngModel)]="nuevaCuenta.numeroCuenta" placeholder="Número de Cuenta">
@@ -30,8 +30,8 @@
     </div>
   </div>
 
-  <div *ngIf="mensajeExito" style="background:#d4edda; color:#155724; padding:10px; border-radius:4px; margin-bottom:10px;">
-    {{ mensajeExito }}
+  <div *ngIf="mensajeExito()" style="background:#d4edda; color:#155724; padding:10px; border-radius:4px; margin-bottom:10px;">
+    {{ mensajeExito() }}
   </div>
 
   <table style="width: 100%; border-collapse: collapse; background: white; border: 1px solid #eee;">
@@ -46,7 +46,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let c of cuentas" style="border-bottom: 1px solid #f9f9f9;">
+      <tr *ngFor="let c of cuentas()" style="border-bottom: 1px solid #f9f9f9;">
         <td style="padding: 15px;">{{ c.numeroCuenta }}</td>
         <td style="padding: 15px;">{{ c.tipoCuenta }}</td>
         <td style="padding: 15px;">{{ c.saldoInicial }}</td>
@@ -61,7 +61,7 @@
           <button (click)="eliminar(c.id)" style="color: #d9534f; border: none; background: none; cursor: pointer; font-weight: bold;">Eliminar</button>
         </td>
       </tr>
-      <tr *ngIf="cuentas.length === 0">
+      <tr *ngIf="cuentas().length === 0">
         <td colspan="6" style="padding: 40px; text-align: center; color: #999;">No hay cuentas registradas.</td>
       </tr>
     </tbody>

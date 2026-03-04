@@ -10,3 +10,10 @@ tr:hover { background-color: #f9f9f9; }
 
 .btn-search { background: #004b81; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 4px; }
 .btn-pdf { margin-top: 20px; background: #126124; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; font-weight: bold; }
+
+.active-link {
+  font-weight: bold;
+  color: #004b81 !important;
+  border-left: 3px solid #ffcc00;
+  padding-left: 8px;
+}

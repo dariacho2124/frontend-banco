@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MovimientoService } from '../services/movimiento.service';
@@ -10,9 +10,9 @@ import { MovimientoService } from '../services/movimiento.service';
   imports: [CommonModule, FormsModule]
 })
 export class MovimientoComponent implements OnInit {
-  movimientos: any[] = [];
-  mostrarFormulario = false;
-  mensajeExito = '';
+  movimientos = signal<any[]>([]);
+  mostrarFormulario = signal<boolean>(false);
+  mensajeExito = signal<string>('');
   nuevoMovimiento: any = {
     fecha: new Date().toISOString().split('T')[0],
     tipoMovimiento: 'Deposito',
@@ -20,26 +20,22 @@ export class MovimientoComponent implements OnInit {
     cuenta: { id: null }
   };
 
-  constructor(private readonly movimientoService: MovimientoService, private readonly cdr: ChangeDetectorRef) {}
+  constructor(private readonly movimientoService: MovimientoService) {}
 
   ngOnInit() { this.listar(); }
 
   listar() {
-    this.movimientoService.getAll().subscribe(res => {
-      this.movimientos = [...res];
-      this.cdr.detectChanges();
-    });
+    this.movimientoService.getAll().subscribe(res => this.movimientos.set(res));
   }
 
   registrar() {
     this.movimientoService.save(this.nuevoMovimiento).subscribe({
       next: (res) => {
-        this.mensajeExito = `¡Éxito! Nuevo saldo: ${res.saldo}`;
-        this.mostrarFormulario = false;
+        this.mensajeExito.set(`¡Éxito! Nuevo saldo: ${res.saldo}`);
+        this.mostrarFormulario.set(false);
         this.nuevoMovimiento = { fecha: new Date().toISOString().split('T')[0], tipoMovimiento: 'Deposito', valor: 0, cuenta: { id: null } };
         this.listar();
-        setTimeout(() => this.mensajeExito = '', 3000);
-        this.cdr.detectChanges();
+        setTimeout(() => this.mensajeExito.set(''), 3000);
       },
       error: (err) => alert('Error: ' + (err.error?.mensaje || 'Saldo insuficiente'))
     });
@@ -49,10 +45,9 @@ export class MovimientoComponent implements OnInit {
     if (confirm('¿Eliminar este movimiento?')) {
       this.movimientoService.delete(id).subscribe({
         next: () => {
-          this.mensajeExito = 'Movimiento eliminado';
+          this.mensajeExito.set('Movimiento eliminado');
           this.listar();
-          setTimeout(() => this.mensajeExito = '', 3000);
-          this.cdr.detectChanges();
+          setTimeout(() => this.mensajeExito.set(''), 3000);
         },
         error: () => alert('Error al eliminar')
       });

@@ -9,8 +9,6 @@ import { CuentaComponent } from './cuentas/cuenta.component';
 import { MovimientoComponent } from './movimientos/movimiento.component';
 @NgModule({
   declarations: [
-    
-    
   ],
   imports: [
     BrowserModule,
