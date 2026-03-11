@@ -52,7 +52,7 @@ export class ReporteComponent {
         m.cuenta?.tipoCuenta,
         m.cuenta?.saldoInicial,
         m.cuenta?.estado ? 'True' : 'False',
-        m.valor,
+        m.movimiento,
         m.saldo
       ]),
       headStyles: { fillColor: [0, 75, 129], textColor: 255, fontStyle: 'bold' },
@@ -72,13 +72,13 @@ export class ReporteComponent {
 
   get totalCreditos(): number {
     return this.movimientos()
-      .filter(m => m.valor > 0)
-      .reduce((sum, m) => sum + m.valor, 0);
+      .filter(m => m.movimiento > 0)
+      .reduce((sum, m) => sum + m.movimiento, 0);
   }
 
   get totalDebitos(): number {
     return this.movimientos()
-      .filter(m => m.valor < 0)
-      .reduce((sum, m) => sum + m.valor, 0);
+      .filter(m => m.movimiento < 0)
+      .reduce((sum, m) => sum + m.movimiento, 0);
   }
 }

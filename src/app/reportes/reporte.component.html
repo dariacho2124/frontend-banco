@@ -30,13 +30,13 @@
   <tbody>
     <tr *ngFor="let m of movimientos()" style="border-bottom: 1px solid #eee;">
       <td style="padding: 12px;">{{ m.fecha }}</td>
-      <td style="padding: 12px;">{{ m.cuenta?.cliente?.nombre }}</td>
-      <td style="padding: 12px;">{{ m.cuenta?.numeroCuenta }}</td>
-      <td style="padding: 12px;">{{ m.cuenta?.tipoCuenta }}</td>
-      <td style="padding: 12px;">{{ m.cuenta?.saldoInicial }}</td>
-      <td style="padding: 12px;">{{ m.cuenta?.estado ? 'True' : 'False' }}</td>
-      <td style="padding: 12px; font-weight: bold;" [style.color]="m.valor < 0 ? 'red' : 'green'">{{ m.valor }}</td>
-      <td style="padding: 12px;">{{ m.saldo }}</td>
+      <td style="padding: 12px;">{{ m.cliente }}</td>
+      <td style="padding: 12px;">{{ m.numeroCuenta }}</td>
+      <td style="padding: 12px;">{{ m.tipo }}</td>
+      <td style="padding: 12px;">{{ m.saldoInicial }}</td>
+      <td style="padding: 12px;">{{ m.estado ? 'True' : 'False' }}</td>
+      <td style="padding: 12px; font-weight: bold;" [style.color]="m.movimiento < 0 ? 'red' : 'green'">{{ m.movimiento }}</td>
+      <td style="padding: 12px;">{{ m.saldoDisponible }}</td>
     </tr>
   </tbody>
 </table>
