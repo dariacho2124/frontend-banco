@@ -42,6 +42,7 @@
   <table style="width: 100%; border-collapse: collapse; background: white; border: 1px solid #eee; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
     <thead style="background: #fcfcfc; border-bottom: 2px solid #eee;">
       <tr>
+        <th style="padding: 15px; text-align: left; color: #666;">ID</th>
         <th style="padding: 15px; text-align: left; color: #666;">Nombre</th>
         <th style="padding: 15px; text-align: left; color: #666;">Dirección</th>
         <th style="padding: 15px; text-align: left; color: #666;">Teléfono</th>
@@ -52,6 +53,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let c of clientesFiltrados()" style="border-bottom: 1px solid #f9f9f9;">
+        <td style="padding: 15px; font-weight: bold; color: #004b81;">{{ c.id }}</td>
         <td style="padding: 15px; font-weight: 500;">{{ c.nombre }}</td>
         <td style="padding: 15px; color: #555;">{{ c.direccion }}</td>
         <td style="padding: 15px; color: #555;">{{ c.telefono }}</td>

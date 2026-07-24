@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MovimientoService } from '../services/movimiento.service';
+import { CuentaService } from '../services/cuenta.service';
 
 @Component({
   selector: 'app-movimiento',
@@ -11,6 +12,7 @@ import { MovimientoService } from '../services/movimiento.service';
 })
 export class MovimientoComponent implements OnInit {
   movimientos = signal<any[]>([]);
+  cuentas = signal<any[]>([]);
   mostrarFormulario = signal<boolean>(false);
   mensajeExito = signal<string>('');
   nuevoMovimiento: any = {
@@ -20,12 +22,22 @@ export class MovimientoComponent implements OnInit {
     cuenta: { id: null }
   };
 
-  constructor(private readonly movimientoService: MovimientoService) {}
+  constructor(
+    private readonly movimientoService: MovimientoService,
+    private readonly cuentaService: CuentaService
+  ) {}
 
-  ngOnInit() { this.listar(); }
+  ngOnInit() {
+    this.listar();
+    this.listarCuentas();
+  }
 
   listar() {
     this.movimientoService.getAll().subscribe(res => this.movimientos.set(res));
+  }
+
+  listarCuentas() {
+    this.cuentaService.getAll().subscribe(res => this.cuentas.set(res));
   }
 
   registrar() {

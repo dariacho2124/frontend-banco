@@ -17,7 +17,7 @@
         <option value="Corriente">Corriente</option>
       </select>
       <input [(ngModel)]="nuevaCuenta.saldoInicial" type="number" placeholder="Saldo Inicial">
-      <input [(ngModel)]="nuevaCuenta.cliente.id" type="number" placeholder="ID Cliente">
+      <input [(ngModel)]="nuevaCuenta.cliente.id" type="number" min="1" placeholder="ID Cliente">
       <label style="display:flex; align-items:center; gap:8px;">
         <input type="checkbox" [(ngModel)]="nuevaCuenta.estado"> Activo
       </label>

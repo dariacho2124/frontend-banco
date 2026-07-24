@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CuentaService } from '../services/cuenta.service';
+import { ClienteService } from '../services/cliente.service';
 
 @Component({
   selector: 'app-cuenta',
@@ -11,6 +12,7 @@ import { CuentaService } from '../services/cuenta.service';
 })
 export class CuentaComponent implements OnInit {
   cuentas = signal<any[]>([]);
+  clientes = signal<any[]>([]);
   mostrarFormulario = signal<boolean>(false);
   mensajeExito = signal<string>('');
   nuevaCuenta: any = {
@@ -21,12 +23,22 @@ export class CuentaComponent implements OnInit {
     cliente: { id: null }
   };
 
-  constructor(private readonly cuentaService: CuentaService) {}
+  constructor(
+    private readonly cuentaService: CuentaService,
+    private readonly clienteService: ClienteService
+  ) {}
 
-  ngOnInit() { this.listar(); }
+  ngOnInit() {
+    this.listar();
+    this.listarClientes();
+  }
 
   listar() {
     this.cuentaService.getAll().subscribe(res => this.cuentas.set(res));
+  }
+
+  listarClientes() {
+    this.clienteService.getAll().subscribe(res => this.clientes.set(res));
   }
 
   guardar() {

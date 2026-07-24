@@ -17,8 +17,12 @@
         <option value="Retiro">Retiro</option>
       </select>
       <input [(ngModel)]="nuevoMovimiento.valor" type="number" placeholder="Valor">
-      <input [(ngModel)]="nuevoMovimiento.cuenta.id" type="number" min="1" placeholder="ID Cuenta"
-       (ngModelChange)="nuevoMovimiento.cuenta.id = +$event">
+      <select [(ngModel)]="nuevoMovimiento.cuenta.id">
+        <option [ngValue]="null">Selecciona una cuenta</option>
+        <option *ngFor="let cuenta of cuentas()" [ngValue]="cuenta.id">
+          {{ cuenta.numeroCuenta }} - {{ cuenta.cliente?.nombre }}
+        </option>
+      </select>
     </div>
     <div style="margin-top: 15px;">
       <button (click)="registrar()" style="background: #117227; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">

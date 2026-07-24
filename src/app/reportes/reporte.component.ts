@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { MovimientoService } from '../services/movimiento.service'; 
+import { ClienteService } from '../services/cliente.service'; 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -8,13 +9,25 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './reporte.component.html',
   imports: [CommonModule, FormsModule],
 })
-export class ReporteComponent {
+export class ReporteComponent implements OnInit {
   movimientos = signal<any[]>([]);
-  id: number = 1;
+  clientes = signal<any[]>([]);
+  id: number | null = null;
   fechaInicio: string = '';
   fechaFin: string = '';
 
-  constructor(private readonly movimientoService: MovimientoService) {}
+  constructor(
+    private readonly movimientoService: MovimientoService,
+    private readonly clienteService: ClienteService
+  ) {}
+
+  ngOnInit() {
+    this.listarClientes();
+  }
+
+  listarClientes() {
+    this.clienteService.getAll().subscribe(res => this.clientes.set(res));
+  }
 
   consultarReporte() {
     if (!this.id || !this.fechaInicio || !this.fechaFin) {
